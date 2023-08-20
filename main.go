@@ -153,7 +153,7 @@ func main() {
 			parser(input)
 		},
 	}
-	cmd.Flags().StringVarP(&parseType, "type", "t", S,
+	cmd.Flags().StringVarP(&parseType, "type", "t", D,
 		"parse type\n s:parse utf8 encoded string\n d:parse decimal\n b:parse binary\n h:parse hex\n")
 
 	if err := cmd.Execute(); err != nil {

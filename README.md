@@ -8,7 +8,7 @@ go install github.com/biningo/bd@latest
 
 ## Usage
 ```bash
-bd "hello,世界"
+bd "hello,世界" -t s
 ```
 ```text
 hello,世界
