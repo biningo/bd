@@ -36,6 +36,18 @@ func byteToBinStr(bytes []byte) []string {
 	return strBytes
 }
 
+func mergeHexParts(hexParts []string) string {
+	parts := make([]string, len(hexParts))
+	for idx, hexPart := range hexParts {
+		parts[idx] = hexPart[2:]
+	}
+	return fmt.Sprintf("0x%s", strings.Join(parts, ""))
+}
+
+func mergeBinParts(binParts []string) string {
+	return strings.Join(binParts, "")
+}
+
 func stringParser(input string) {
 	fmt.Println(input)
 	chars, bytes := []rune(input), []byte(input)
@@ -72,17 +84,21 @@ func decimalNumberParser(input string) {
 		fmt.Println("input is not decimal number")
 		return
 	}
-	fmt.Println(number)
 
 	bytes := []byte{}
-	for number > 0 {
-		bytes = append(bytes, byte(number))
-		number >>= 8
+	for n := number; n > 0; {
+		bytes = append(bytes, byte(n))
+		n >>= 8
 	}
 	slices.Reverse(bytes)
+	hexParts := byteToHexStr(bytes)
+	binParts := byteToBinStr(bytes)
+
+	fmt.Printf("%d\n%s\n%s\n", number, mergeHexParts(hexParts), mergeBinParts(binParts))
+
 	table := tablewriter.NewWriter(os.Stdout)
-	table.Append(byteToHexStr(bytes))
-	table.Append(byteToBinStr(bytes))
+	table.Append(hexParts)
+	table.Append(binParts)
 	table.Render()
 }
 
